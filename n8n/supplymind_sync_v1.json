@@ -1,0 +1,123 @@
+{
+  "name": "SupplyMind Intelligence Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "at": 5
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule Every 5min",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://your-supplymind-domain.com/api/orchestration/risk-scan",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-n8n-secret",
+              "value": "ENTER_YOUR_SECRET_HERE"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-risk-scan",
+      "name": "Trigger Risk Scan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ $json.scannedNodes }}",
+              "operation": "larger",
+              "value2": 0
+            }
+          ]
+        }
+      },
+      "id": "check-nodes",
+      "name": "Disruptions Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_CHAT_ID",
+        "text": "=🚀 SupplyMind Intelligence Update\n\nAI Risk Scan complete.\nDisruptions Analyzed: {{ $json.scannedNodes }}\nTimestamp: {{ $json.timestamp }}",
+        "options": {}
+      },
+      "id": "google-chat-notify",
+      "name": "Notify Stakeholders",
+      "type": "n8n-nodes-base.googleChat",
+      "typeVersion": 1,
+      "position": [
+        850,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Every 5min": {
+      "main": [
+        [
+          {
+            "node": "Trigger Risk Scan",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Risk Scan": {
+      "main": [
+        [
+          {
+            "node": "Disruptions Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Disruptions Found?": {
+      "main": [
+        [
+          {
+            "node": "Notify Stakeholders",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "id": "supplymind-sync-v1"
+}

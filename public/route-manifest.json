@@ -1,0 +1,622 @@
+{
+  "generatedAt": "2026-04-19T15:16:18.580Z",
+  "source": "scripts/utils/route-manifest.ts",
+  "totals": {
+    "pages": 37,
+    "apis": 40
+  },
+  "pageRoutes": [
+    {
+      "type": "page",
+      "path": "/",
+      "file": "app/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/adjustments",
+      "file": "app/adjustments/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/adjustments/new",
+      "file": "app/adjustments/new/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/admin/users",
+      "file": "app/admin/users/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/auth/forgot-password",
+      "file": "app/auth/forgot-password/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/auth/pending",
+      "file": "app/auth/pending/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/auth/reset-password",
+      "file": "app/auth/reset-password/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/auth/signin",
+      "file": "app/auth/signin/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/auth/signup",
+      "file": "app/auth/signup/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/dashboard",
+      "file": "app/dashboard/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/deliveries",
+      "file": "app/deliveries/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/deliveries/:id",
+      "file": "app/deliveries/[id]/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/deliveries/new",
+      "file": "app/deliveries/new/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/landing",
+      "file": "app/landing/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/ledger",
+      "file": "app/ledger/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/products",
+      "file": "app/products/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/products/:id",
+      "file": "app/products/[id]/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/products/:id/edit",
+      "file": "app/products/[id]/edit/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/products/new",
+      "file": "app/products/new/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/products/new-enhanced",
+      "file": "app/products/new-enhanced/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/receipts",
+      "file": "app/receipts/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/receipts/:id",
+      "file": "app/receipts/[id]/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/receipts/new",
+      "file": "app/receipts/new/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/receipts/new-enhanced",
+      "file": "app/receipts/new-enhanced/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/requisitions",
+      "file": "app/requisitions/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/requisitions/:id",
+      "file": "app/requisitions/[id]/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/requisitions/new",
+      "file": "app/requisitions/new/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/settings",
+      "file": "app/settings/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/settings/locations",
+      "file": "app/settings/locations/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/settings/warehouses",
+      "file": "app/settings/warehouses/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/settings/warehouses/:id",
+      "file": "app/settings/warehouses/[id]/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/signup",
+      "file": "app/signup/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/test-email-template",
+      "file": "app/test-email-template/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/transfers",
+      "file": "app/transfers/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/transfers/:id",
+      "file": "app/transfers/[id]/page.tsx",
+      "dynamic": true
+    },
+    {
+      "type": "page",
+      "path": "/transfers/new",
+      "file": "app/transfers/new/page.tsx",
+      "dynamic": false
+    },
+    {
+      "type": "page",
+      "path": "/welcome",
+      "file": "app/welcome/page.tsx",
+      "dynamic": false
+    }
+  ],
+  "apiRoutes": [
+    {
+      "type": "api",
+      "path": "/api/adjustments",
+      "file": "app/api/adjustments/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/admin/users",
+      "file": "app/api/admin/users/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/admin/users/:id",
+      "file": "app/api/admin/users/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/admin/users/:id/approve",
+      "file": "app/api/admin/users/[id]/approve/route.ts",
+      "dynamic": true,
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/admin/users/:id/reject",
+      "file": "app/api/admin/users/[id]/reject/route.ts",
+      "dynamic": true,
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/analytics/best-source",
+      "file": "app/api/analytics/best-source/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/analytics/dashboard",
+      "file": "app/api/analytics/dashboard/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/analytics/low-stock",
+      "file": "app/api/analytics/low-stock/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/analytics/slow-stock",
+      "file": "app/api/analytics/slow-stock/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/analytics/stock-health",
+      "file": "app/api/analytics/stock-health/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/analytics/stockouts",
+      "file": "app/api/analytics/stockouts/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/auth/forgot-password",
+      "file": "app/api/auth/forgot-password/route.ts",
+      "dynamic": false,
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/auth/me",
+      "file": "app/api/auth/me/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/auth/reset-password",
+      "file": "app/api/auth/reset-password/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/auth/session",
+      "file": "app/api/auth/session/route.ts",
+      "dynamic": false,
+      "methods": [
+        "POST",
+        "DELETE"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/auth/signup",
+      "file": "app/api/auth/signup/route.ts",
+      "dynamic": false,
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/chat",
+      "file": "app/api/chat/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/dashboard",
+      "file": "app/api/dashboard/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/dashboard/summary",
+      "file": "app/api/dashboard/summary/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/deliveries",
+      "file": "app/api/deliveries/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/deliveries/:id",
+      "file": "app/api/deliveries/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/ledger",
+      "file": "app/api/ledger/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/locations",
+      "file": "app/api/locations/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/locations/:id",
+      "file": "app/api/locations/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/products",
+      "file": "app/api/products/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/products/:id",
+      "file": "app/api/products/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/products/:id/stock-levels",
+      "file": "app/api/products/[id]/stock-levels/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/products/bulk-import",
+      "file": "app/api/products/bulk-import/route.ts",
+      "dynamic": false,
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/receipts",
+      "file": "app/api/receipts/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/receipts/:id",
+      "file": "app/api/receipts/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/receipts/bulk-import",
+      "file": "app/api/receipts/bulk-import/route.ts",
+      "dynamic": false,
+      "methods": [
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/requisitions",
+      "file": "app/api/requisitions/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/requisitions/:id",
+      "file": "app/api/requisitions/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/stock",
+      "file": "app/api/stock/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/templates",
+      "file": "app/api/templates/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/test-email",
+      "file": "app/api/test-email/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/transfers",
+      "file": "app/api/transfers/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/transfers/:id",
+      "file": "app/api/transfers/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "POST",
+        "PUT"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/warehouses",
+      "file": "app/api/warehouses/route.ts",
+      "dynamic": false,
+      "methods": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "type": "api",
+      "path": "/api/warehouses/:id",
+      "file": "app/api/warehouses/[id]/route.ts",
+      "dynamic": true,
+      "methods": [
+        "GET",
+        "PUT",
+        "DELETE"
+      ]
+    }
+  ]
+}

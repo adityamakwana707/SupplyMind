@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockMaster Route Tester</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: #111a33;
+        --card-2: #172346;
+        --text: #e9efff;
+        --muted: #9fb0d3;
+        --accent: #44e5c2;
+        --warn: #ffc857;
+        --ok: #5ef38c;
+        --bad: #ff6b6b;
+        --skip: #8ea0c6;
+        --border: rgba(255, 255, 255, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: 'Space Grotesk', sans-serif;
+        color: var(--text);
+        min-height: 100vh;
+        background: radial-gradient(circle at 15% 15%, #1c2c58 0%, transparent 35%),
+          radial-gradient(circle at 85% 20%, #1a6c66 0%, transparent 32%),
+          linear-gradient(165deg, #0b1020 0%, #111a33 45%, #172346 100%);
+      }
+
+      .container {
+        width: min(1200px, 95vw);
+        margin: 24px auto 40px;
+      }
+
+      .card {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      }
+
+      .hero {
+        padding: 22px;
+        margin-bottom: 16px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(1.4rem, 3vw, 2rem);
+      }
+
+      .sub {
+        margin-top: 8px;
+        color: var(--muted);
+      }
+
+      .controls {
+        padding: 18px;
+        margin-bottom: 16px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .row {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+
+      label {
+        font-size: 0.85rem;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      input,
+      textarea,
+      button {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: var(--card);
+        color: var(--text);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.86rem;
+      }
+
+      input,
+      textarea {
+        padding: 10px;
+      }
+
+      textarea {
+        min-height: 68px;
+        resize: vertical;
+      }
+
+      .actions {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+
+      button {
+        cursor: pointer;
+        padding: 10px 12px;
+        background: linear-gradient(135deg, #1f2f5f, #1b7b74);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+
+      button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.24);
+      }
+
+      .note {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .summary {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(5, minmax(110px, 1fr));
+        padding: 14px;
+        margin-bottom: 16px;
+      }
+
+      .pill {
+        background: var(--card-2);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 10px;
+      }
+
+      .pill .k {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .pill .v {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 1.1rem;
+        margin-top: 4px;
+      }
+
+      .results {
+        overflow: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 860px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--border);
+        padding: 8px;
+        text-align: left;
+        font-size: 0.84rem;
+      }
+
+      th {
+        color: var(--muted);
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(6px);
+        background: rgba(10, 16, 32, 0.9);
+      }
+
+      .status-pass {
+        color: var(--ok);
+        font-weight: 700;
+      }
+
+      .status-fail {
+        color: var(--bad);
+        font-weight: 700;
+      }
+
+      .status-skip {
+        color: var(--skip);
+        font-weight: 700;
+      }
+
+      .mono {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      .small {
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      @media (max-width: 760px) {
+        .summary {
+          grid-template-columns: repeat(2, minmax(110px, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="card hero">
+        <h1>StockMaster Route Tester</h1>
+        <div class="sub">Runs page and API smoke checks from the browser using generated route-manifest.json.</div>
+      </section>
+
+      <section class="card controls">
+        <div class="row">
+          <div>
+            <label for="baseUrl">Base URL</label>
+            <input id="baseUrl" />
+          </div>
+          <div>
+            <label for="manifestUrl">Manifest URL</label>
+            <input id="manifestUrl" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="routeParams">Dynamic params (key=value, comma-separated)</label>
+            <input id="routeParams" placeholder="id=abc123, warehouseId=wh001, productId=prod001" />
+          </div>
+          <div>
+            <label for="requestTimeout">Timeout (ms)</label>
+            <input id="requestTimeout" value="12000" />
+          </div>
+          <div>
+            <label for="requestRetries">Retries</label>
+            <input id="requestRetries" value="1" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label><input id="includeDynamic" type="checkbox" checked /> Include dynamic routes</label>
+          </div>
+          <div>
+            <label><input id="includeMutations" type="checkbox" /> Include mutating API methods (POST/PUT/PATCH/DELETE)</label>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="btnLoad">Load Manifest</button>
+          <button id="btnPages">Test Page Routes</button>
+          <button id="btnApis">Test API Routes</button>
+          <button id="btnAll">Test All Routes</button>
+          <button id="btnClear">Clear Results</button>
+        </div>
+
+        <div class="note">
+          For authenticated routes, open this page in the same browser session where you are logged into StockMaster. Browser fetch sends your existing session cookie automatically for same-origin requests.
+        </div>
+      </section>
+
+      <section class="card summary">
+        <div class="pill"><div class="k">Manifest Pages</div><div id="sumPages" class="v">0</div></div>
+        <div class="pill"><div class="k">Manifest APIs</div><div id="sumApis" class="v">0</div></div>
+        <div class="pill"><div class="k">Pass</div><div id="sumPass" class="v">0</div></div>
+        <div class="pill"><div class="k">Fail</div><div id="sumFail" class="v">0</div></div>
+        <div class="pill"><div class="k">Skip</div><div id="sumSkip" class="v">0</div></div>
+      </section>
+
+      <section class="card results">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Type</th>
+              <th>Method</th>
+              <th>Route</th>
+              <th>Status</th>
+              <th>HTTP</th>
+              <th>Time (ms)</th>
+              <th>Message</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </section>
+    </div>
+
+    <script>
+      const state = {
+        manifest: null,
+        results: [],
+      };
+
+      const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
+      const BODY_METHODS = new Set(['POST', 'PUT', 'PATCH']);
+
+      const baseUrlInput = document.getElementById('baseUrl');
+      const manifestUrlInput = document.getElementById('manifestUrl');
+      const routeParamsInput = document.getElementById('routeParams');
+      const requestTimeoutInput = document.getElementById('requestTimeout');
+      const requestRetriesInput = document.getElementById('requestRetries');
+      const includeDynamicInput = document.getElementById('includeDynamic');
+      const includeMutationsInput = document.getElementById('includeMutations');
+      const resultsBody = document.getElementById('resultsBody');
+
+      const sumPages = document.getElementById('sumPages');
+      const sumApis = document.getElementById('sumApis');
+      const sumPass = document.getElementById('sumPass');
+      const sumFail = document.getElementById('sumFail');
+      const sumSkip = document.getElementById('sumSkip');
+
+      baseUrlInput.value = window.location.origin;
+      manifestUrlInput.value = `${window.location.origin}/route-manifest.json`;
+
+      document.getElementById('btnLoad').addEventListener('click', loadManifest);
+      document.getElementById('btnPages').addEventListener('click', () => testRoutes('page'));
+      document.getElementById('btnApis').addEventListener('click', () => testRoutes('api'));
+      document.getElementById('btnAll').addEventListener('click', () => testRoutes('all'));
+      document.getElementById('btnClear').addEventListener('click', clearResults);
+
+      function parseParams(raw) {
+        if (!raw) return {};
+        const out = {};
+        raw
+          .split(',')
+          .map((item) => item.trim())
+          .filter(Boolean)
+          .forEach((pair) => {
+            const [key, value] = pair.split('=');
+            if (key && value) {
+              out[key.trim()] = value.trim();
+            }
+          });
+        return out;
+      }
+
+      function resolveDynamicPath(routePath, params) {
+        return routePath.replace(/:([a-zA-Z0-9_]+)\*?/g, (_m, key) => {
+          const value = params[key] || `test-${key}`;
+          return encodeURIComponent(value);
+        });
+      }
+
+      function updateManifestSummary() {
+        sumPages.textContent = state.manifest ? String(state.manifest.totals.pages || 0) : '0';
+        sumApis.textContent = state.manifest ? String(state.manifest.totals.apis || 0) : '0';
+      }
+
+      function updateResultSummary() {
+        const pass = state.results.filter((r) => r.status === 'PASS').length;
+        const fail = state.results.filter((r) => r.status === 'FAIL').length;
+        const skip = state.results.filter((r) => r.status === 'SKIP').length;
+
+        sumPass.textContent = String(pass);
+        sumFail.textContent = String(fail);
+        sumSkip.textContent = String(skip);
+      }
+
+      function statusClass(status) {
+        if (status === 'PASS') return 'status-pass';
+        if (status === 'FAIL') return 'status-fail';
+        return 'status-skip';
+      }
+
+      function renderResults() {
+        resultsBody.innerHTML = '';
+
+        state.results.forEach((result, index) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="mono">${index + 1}</td>
+            <td>${result.kind}</td>
+            <td class="mono">${result.method}</td>
+            <td class="mono">${result.route}</td>
+            <td class="${statusClass(result.status)}">${result.status}</td>
+            <td class="mono">${result.httpStatus || '-'}</td>
+            <td class="mono">${result.durationMs || '-'}</td>
+            <td class="small">${result.message || ''}</td>
+          `;
+          resultsBody.appendChild(tr);
+        });
+
+        updateResultSummary();
+      }
+
+      function clearResults() {
+        state.results = [];
+        renderResults();
+      }
+
+      function addResult(result) {
+        state.results.push(result);
+        renderResults();
+      }
+
+      async function loadManifest() {
+        try {
+          const manifestResponse = await fetch(manifestUrlInput.value, { cache: 'no-store' });
+          if (!manifestResponse.ok) {
+            throw new Error(`Manifest request failed with ${manifestResponse.status}`);
+          }
+
+          state.manifest = await manifestResponse.json();
+          updateManifestSummary();
+          addResult({
+            kind: 'meta',
+            method: 'GET',
+            route: manifestUrlInput.value,
+            status: 'PASS',
+            httpStatus: 200,
+            durationMs: 0,
+            message: `Loaded ${state.manifest.totals.pages} pages and ${state.manifest.totals.apis} APIs`,
+          });
+        } catch (error) {
+          addResult({
+            kind: 'meta',
+            method: 'GET',
+            route: manifestUrlInput.value,
+            status: 'FAIL',
+            message: String(error.message || error),
+          });
+        }
+      }
+
+      async function runRequest({ kind, method, route, url, timeoutMs, retries }) {
+        for (let attempt = 0; attempt <= retries; attempt++) {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), timeoutMs);
+          const start = Date.now();
+
+          try {
+            const response = await fetch(url, {
+              method,
+              credentials: 'include',
+              redirect: 'manual',
+              signal: controller.signal,
+              headers: BODY_METHODS.has(method) ? { 'Content-Type': 'application/json' } : undefined,
+              body: BODY_METHODS.has(method)
+                ? JSON.stringify({ _routeSmokeTest: true, route, timestamp: new Date().toISOString() })
+                : undefined,
+            });
+
+            const durationMs = Date.now() - start;
+            addResult({
+              kind,
+              method,
+              route,
+              status: response.status < 500 ? 'PASS' : 'FAIL',
+              httpStatus: response.status,
+              durationMs,
+              message: response.status >= 500 ? 'Server returned 5xx' : '',
+            });
+            return;
+          } catch (error) {
+            const isTransient = String(error?.name || '').includes('AbortError') || String(error?.message || '').toLowerCase().includes('fetch');
+            if (isTransient && attempt < retries) {
+              clearTimeout(timer);
+              continue;
+            }
+
+            addResult({
+              kind,
+              method,
+              route,
+              status: 'FAIL',
+              durationMs: Date.now() - start,
+              message: `${String(error.message || error)} (${attempt + 1} attempt${attempt > 0 ? 's' : ''})`,
+            });
+            return;
+          } finally {
+            clearTimeout(timer);
+          }
+        }
+      }
+
+      async function testRoutes(target) {
+        if (!state.manifest) {
+          await loadManifest();
+          if (!state.manifest) return;
+        }
+
+        const includeDynamic = includeDynamicInput.checked;
+        const includeMutations = includeMutationsInput.checked;
+        const params = parseParams(routeParamsInput.value);
+        const timeoutMs = Number(requestTimeoutInput.value || '12000');
+        const retries = Math.max(0, Number(requestRetriesInput.value || '1'));
+        const baseUrl = baseUrlInput.value.replace(/\/$/, '');
+
+        const queue = [];
+
+        if (target === 'page' || target === 'all') {
+          for (const route of state.manifest.pageRoutes || []) {
+            if (route.dynamic && !includeDynamic) {
+              addResult({
+                kind: 'page',
+                method: 'GET',
+                route: route.path,
+                status: 'SKIP',
+                message: 'Dynamic route skipped',
+              });
+              continue;
+            }
+            const resolvedPath = resolveDynamicPath(route.path, params);
+            queue.push({
+              kind: 'page',
+              method: 'GET',
+              route: route.path,
+              url: `${baseUrl}${resolvedPath}`,
+              timeoutMs,
+              retries,
+            });
+          }
+        }
+
+        if (target === 'api' || target === 'all') {
+          for (const route of state.manifest.apiRoutes || []) {
+            if (route.dynamic && !includeDynamic) {
+              addResult({
+                kind: 'api',
+                method: 'GET',
+                route: route.path,
+                status: 'SKIP',
+                message: 'Dynamic route skipped',
+              });
+              continue;
+            }
+
+            const methods = route.methods && route.methods.length > 0 ? route.methods : ['GET'];
+            for (const method of methods) {
+              if (!includeMutations && !SAFE_METHODS.has(method)) {
+                addResult({
+                  kind: 'api',
+                  method,
+                  route: route.path,
+                  status: 'SKIP',
+                  message: 'Mutating method skipped',
+                });
+                continue;
+              }
+
+              const resolvedPath = resolveDynamicPath(route.path, params);
+              queue.push({
+                kind: 'api',
+                method,
+                route: route.path,
+                url: `${baseUrl}${resolvedPath}`,
+                timeoutMs,
+                retries,
+              });
+            }
+          }
+        }
+
+        for (const job of queue) {
+          await runRequest(job);
+        }
+      }
+    </script>
+  </body>
+</html>

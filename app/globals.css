@@ -1,0 +1,200 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Modern Glassy Light Theme */
+
+  --card: rgba(255, 255, 255, 0.8);
+  --card-foreground: #1e293b;
+
+  --primary: #3b82f6;
+  --primary-foreground: #ffffff;
+
+  --secondary: #8b5cf6;
+  --secondary-foreground: #ffffff;
+
+  --muted: rgba(241, 245, 249, 0.7);
+  --muted-foreground: #64748b;
+
+  --accent: rgba(219, 234, 254, 0.6);
+  --accent-foreground: #1e3a8a;
+
+  --border: rgba(226, 232, 240, 0.5);
+  --input: rgba(226, 232, 240, 0.5);
+  --ring: #3b82f6;
+
+  --radius: 1rem;
+}
+
+body {
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  :root {
+
+    --background: 210 40% 98%;
+
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100% / 0.4;
+
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100% / 0.8;
+
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 217 91% 60%;
+
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 258 90% 66%;
+
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 214 32% 97% / 0.6;
+
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 214 95% 93% / 0.5;
+
+    --accent-foreground: 217 91% 40%;
+
+    --destructive: 0 84.2% 60.2%;
+
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 214 20% 90% / 0.15;
+
+    --input: 214 20% 85% / 0.4;
+
+    --ring: 217 91% 60%;
+
+    --chart-1: 12 76% 61%;
+
+    --chart-2: 173 58% 39%;
+
+    --chart-3: 197 37% 24%;
+
+    --chart-4: 43 74% 66%;
+
+    --chart-5: 27 87% 67%;
+
+    --radius: 0.75rem;
+  }
+  .dark {
+
+    --background: 240 10% 8%;
+
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 100% / 0.05;
+
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 8% 6% / 0.8;
+
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 217 91% 60%;
+
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 258 90% 66%;
+
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 6% 10% / 0.5;
+
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 240 5% 12% / 0.5;
+
+    --accent-foreground: 217 91% 60%;
+
+    --destructive: 0 62.8% 30.6%;
+
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 100% / 0.06;
+
+    --input: 240 8% 18% / 0.4;
+
+    --ring: 217 91% 60%;
+
+    --chart-1: 220 70% 50%;
+
+    --chart-2: 160 60% 45%;
+
+    --chart-3: 30 80% 55%;
+
+    --chart-4: 280 65% 60%;
+
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grid-pattern {
+    background-image: linear-gradient(to right, rgb(0 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(0 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .dark .bg-grid-pattern {
+    background-image: linear-gradient(to right, rgb(255 255 255 / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.03) 1px, transparent 1px);
+  }
+
+  /* Enhanced Glassy effect utilities */
+  @supports (backdrop-filter: blur(10px)) {
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .dark .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+}
+
+/* Global backdrop blur for cards */
+.backdrop-blur-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Glassmorphism shadow */
+.glass-shadow {
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.15),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.dark .glass-shadow {
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+::view-transition-old(root), ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
