@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { useSession } from '@/components/AuthProvider';
+import { useTheme } from 'next-themes';
 import { signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase/client';
 import {
@@ -30,6 +31,8 @@ import {
   ShoppingCart,
   SlidersHorizontal,
   Star,
+  Sun,
+  Moon,
   Truck,
   Users,
   Warehouse,
@@ -73,6 +76,7 @@ const isActivePath = (pathname: string, href: string) => {
 export default function Sidebar() {
   const pathname = usePathname() || '/';
   const { data: session } = useSession();
+  const { theme, setTheme } = useTheme();
 
   const user = session?.user as any;
   const role = (user?.role as Role | undefined) || undefined;
@@ -282,6 +286,24 @@ export default function Sidebar() {
             </div>
           )}
         </div>
+
+        <button
+          type="button"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          title={collapsed ? 'Toggle Theme' : undefined}
+          className={[
+            'mt-3 w-full flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-all duration-300',
+            'bg-black/5 dark:bg-white/10 text-slate-700 dark:text-slate-200 hover:bg-black/10 dark:hover:bg-white/20',
+            collapsed ? 'justify-center' : '',
+          ].join(' ')}
+        >
+          {theme === 'dark' ? (
+            <Sun className="h-5 w-5 shrink-0" />
+          ) : (
+            <Moon className="h-5 w-5 shrink-0" />
+          )}
+          {!collapsed && <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>}
+        </button>
 
         <button
           type="button"

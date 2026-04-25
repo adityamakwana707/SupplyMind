@@ -15,6 +15,7 @@ interface StockMovement {
   type: string;
   createdAt: string;
   createdBy: any;
+  description?: string;
 }
 
 export default function LedgerPage() {
@@ -47,6 +48,8 @@ export default function LedgerPage() {
         return 'text-destructive';
       case 'TRANSFER':
         return 'text-primary';
+      case 'AI_MITIGATION':
+        return 'text-secondary';
       case 'ADJUSTMENT':
         return 'text-muted-foreground';
       default:
@@ -113,13 +116,17 @@ export default function LedgerPage() {
                     {formatDate(movement.createdAt)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground">
-                    {movement.productId?.name || movement.productId?.sku || '-'}
+                    {movement.type === 'AI_MITIGATION' ? (
+                      <span className="font-semibold text-primary">{movement.description || 'AI Action'}</span>
+                    ) : (
+                      movement.productId?.name || movement.productId?.sku || (typeof movement.productId === 'string' ? `[${movement.productId}] Unknown Product` : '-')
+                    )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                    {movement.warehouseFromId?.name || '-'}
+                    {movement.type === 'AI_MITIGATION' ? 'Vertex AI Engine' : (movement.warehouseFromId?.name || (typeof movement.warehouseFromId === 'string' ? movement.warehouseFromId : '-'))}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                    {movement.warehouseToId?.name || '-'}
+                    {movement.type === 'AI_MITIGATION' ? 'Control Tower' : (movement.warehouseToId?.name || (typeof movement.warehouseToId === 'string' ? movement.warehouseToId : '-'))}
                   </td>
                   <td
                     className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${getTypeColor(
@@ -139,7 +146,7 @@ export default function LedgerPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-muted-foreground">
-                    {movement.createdBy?.name || '-'}
+                    {movement.createdBy?.name || (typeof movement.createdBy === 'string' ? movement.createdBy : '-')}
                   </td>
                 </tr>
               ))}

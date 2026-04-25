@@ -16,7 +16,7 @@ export function CTASection() {
     <section className="relative py-20 md:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-muted/20" />
 
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container mx-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}

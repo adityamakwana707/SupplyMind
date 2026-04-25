@@ -28,7 +28,7 @@ export async function getDashboardData(warehouseId?: string) {
     // Pending Requisitions
     let reqRef: any = adminDb.collection('requisitions').where('status', '==', 'SUBMITTED');
     if (warehouseId) {
-      reqRef = reqRef.where('warehouseId', '==', warehouseId);
+      reqRef = reqRef.where('requestingWarehouseId', '==', warehouseId);
     }
     const requisitionsSnapshot = await reqRef.get();
     const pendingRequisitions = requisitionsSnapshot.size;

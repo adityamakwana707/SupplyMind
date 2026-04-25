@@ -403,7 +403,7 @@ export default function RequisitionDetailPage() {
             <label className="block text-sm font-medium text-muted-foreground mb-1">
               Created By
             </label>
-            <p className="text-foreground">{requisition.createdBy?.name || '-'}</p>
+            <p className="text-foreground">{requisition.createdBy?.name || (typeof requisition.createdBy === 'string' ? requisition.createdBy : '-')}</p>
           </div>
 
           <div>
@@ -419,7 +419,7 @@ export default function RequisitionDetailPage() {
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
                   Approved By
                 </label>
-                <p className="text-foreground">{requisition.approvedBy?.name || '-'}</p>
+                <p className="text-foreground">{requisition.approvedBy?.name || (typeof requisition.approvedBy === 'string' ? requisition.approvedBy : '-')}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
@@ -461,7 +461,7 @@ export default function RequisitionDetailPage() {
                 {requisition.lines?.map((line: any, index: number) => (
                   <tr key={index}>
                     <td className="px-4 py-3 text-foreground">
-                      [{line.productId?.sku}] {line.productId?.name}
+                      {line.productId?.sku ? `[${line.productId.sku}] ` : ''}{line.productId?.name || (typeof line.productId === 'string' ? `[${line.productId}] Unknown Product` : 'Unknown Product')}
                     </td>
                     <td className="px-4 py-3 text-right text-foreground">
                       {line.quantityRequested} {line.productId?.unit}

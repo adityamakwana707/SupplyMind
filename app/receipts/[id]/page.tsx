@@ -186,7 +186,9 @@ export default function ReceiptDetailPage() {
             <label className="block text-sm font-medium text-muted-foreground mb-1">
               Created By
             </label>
-            <p className="text-foreground">{receipt.createdBy?.name || '-'}</p>
+            <p className="text-foreground">
+              {typeof receipt.createdBy === 'string' ? receipt.createdBy : (receipt.createdBy?.name || '-')}
+            </p>
           </div>
 
           <div>
@@ -202,7 +204,7 @@ export default function ReceiptDetailPage() {
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
                   Validated By
                 </label>
-                <p className="text-foreground">{receipt.validatedBy?.name || '-'}</p>
+                <p className="text-foreground">{receipt.validatedBy?.name || (typeof receipt.validatedBy === 'string' ? receipt.validatedBy : '-')}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
@@ -244,10 +246,15 @@ export default function ReceiptDetailPage() {
                 {receipt.lines?.map((line: any, index: number) => (
                   <tr key={index}>
                     <td className="px-4 py-3 text-foreground">
-                      [{line.productId?.sku}] {line.productId?.name}
+                      {typeof line.productId === 'string' 
+                        ? `[${line.productId}] Unknown Product` 
+                        : `[${line.productId?.sku || '??'}] ${line.productId?.name || 'Unknown Product'}`
+                      }
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      {line.locationId?.name || '-'}
+                      {typeof line.locationId === 'string'
+                        ? line.locationId
+                        : (line.locationId?.name || (typeof line.locationId === 'string' ? line.locationId : '-'))}
                     </td>
                     <td className="px-4 py-3 text-right text-foreground">
                       {line.quantity} {line.productId?.unit}

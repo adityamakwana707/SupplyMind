@@ -411,7 +411,7 @@ export default function DeliveryDetailPage() {
             <label className="block text-sm font-medium text-muted-foreground mb-1">
               Created By
             </label>
-            <p className="text-foreground">{delivery.createdBy?.name || '-'}</p>
+            <p className="text-foreground">{delivery.createdBy?.name || (typeof delivery.createdBy === 'string' ? delivery.createdBy : '-')}</p>
           </div>
 
           <div>
@@ -427,7 +427,7 @@ export default function DeliveryDetailPage() {
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
                   Accepted By
                 </label>
-                <p className="text-foreground">{delivery.acceptedBy?.name || '-'}</p>
+                <p className="text-foreground">{delivery.acceptedBy?.name || (typeof delivery.acceptedBy === 'string' ? delivery.acceptedBy : '-')}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
@@ -444,7 +444,7 @@ export default function DeliveryDetailPage() {
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
                   Validated By
                 </label>
-                <p className="text-foreground">{delivery.validatedBy?.name || '-'}</p>
+                <p className="text-foreground">{delivery.validatedBy?.name || (typeof delivery.validatedBy === 'string' ? delivery.validatedBy : '-')}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
@@ -486,10 +486,10 @@ export default function DeliveryDetailPage() {
                 {delivery.lines?.map((line: any, index: number) => (
                   <tr key={index}>
                     <td className="px-4 py-3 text-foreground">
-                      [{line.productId?.sku}] {line.productId?.name}
+                      {line.productId?.sku ? `[${line.productId.sku}] ` : ''} {line.productId?.name || (typeof line.productId === 'string' ? `[${line.productId}] Unknown Product` : 'Unknown Product')}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      {line.fromLocationId?.name || '-'}
+                      {line.fromLocationId?.name || (typeof line.fromLocationId === 'string' ? line.fromLocationId : '-')}
                     </td>
                     <td className="px-4 py-3 text-right text-foreground">
                       {line.quantity} {line.productId?.unit}

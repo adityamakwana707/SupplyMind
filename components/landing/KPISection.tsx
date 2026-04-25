@@ -96,7 +96,7 @@ export function KPISection() {
     <section className="relative py-20 md:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/20 to-background" />
       
-      <div className="relative z-10 container mx-auto px-4">
+      <div className="relative z-10 container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -113,7 +113,7 @@ export function KPISection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1600px] mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-auto">
           {stats.map((stat, index) => (
             <StatCard
               key={stat.label}

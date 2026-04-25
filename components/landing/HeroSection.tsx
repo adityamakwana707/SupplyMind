@@ -20,7 +20,7 @@ export function HeroSection() {
       <div className="absolute inset-0 bg-grid-pattern opacity-40" />
       
       
-      <div className="relative z-10 container mx-auto px-4 py-12 max-w-[1600px]">
+      <div className="relative z-10 container mx-auto py-12">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="space-y-8">

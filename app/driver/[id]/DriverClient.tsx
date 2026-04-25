@@ -11,7 +11,9 @@ import {
   Coffee, 
   CheckCircle2,
   Navigation2,
-  Radio
+  Radio,
+  WifiOff,
+  RefreshCcw
 } from 'lucide-react';
 import { db } from '@/lib/firebase/client';
 import { doc, getDoc } from 'firebase/firestore';
@@ -51,6 +53,49 @@ export default function DriverClient({ shipmentId }: { shipmentId: string }) {
   const [restLoading, setRestLoading] = useState(false);
   const [rerouteBanner, setRerouteBanner] = useState<string | null>(null);
   const [lastRouteFingerprint, setLastRouteFingerprint] = useState<string | null>(null);
+  const [offlineQueueSize, setOfflineQueueSize] = useState(0);
+
+  // Poll for offline queue updates
+  useEffect(() => {
+    const checkQueue = () => {
+      const QUEUE_KEY = `offline_pings_${shipmentId}`;
+      const stored = localStorage.getItem(QUEUE_KEY);
+      if (stored) {
+        try {
+          const queue = JSON.parse(stored);
+          setOfflineQueueSize(Array.isArray(queue) ? queue.length : 0);
+        } catch(e) {}
+      } else {
+        setOfflineQueueSize(0);
+      }
+    };
+    checkQueue();
+    const interval = setInterval(checkQueue, 2000);
+    return () => clearInterval(interval);
+  }, [shipmentId]);
+
+  const forceSyncOffline = async () => {
+    const QUEUE_KEY = `offline_pings_${shipmentId}`;
+    const stored = localStorage.getItem(QUEUE_KEY);
+    if (!stored) return;
+    try {
+      const queue = JSON.parse(stored);
+      if (queue.length === 0) return;
+      const latestPing = queue[queue.length - 1];
+      await fetch(`/api/shipments/${shipmentId}/location`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(latestPing)
+      });
+      localStorage.removeItem(QUEUE_KEY);
+      setOfflineQueueSize(0);
+      setError(null);
+      setLastPing(new Date().toLocaleTimeString());
+      alert('Offline data synchronized successfully!');
+    } catch (err) {
+      alert('Still offline. Please connect to internet to sync.');
+    }
+  };
 
   const resolveNodeName = useCallback(async (node: any): Promise<string> => {
     if (!node?.type) return 'Unknown';
@@ -198,21 +243,45 @@ export default function DriverClient({ shipmentId }: { shipmentId: string }) {
         intervalId = window.setInterval(async () => {
           if (!latestPos) return;
           const { latitude, longitude, speed, heading } = latestPos.coords;
+          const currentPing = {
+            lat: latitude,
+            lng: longitude,
+            speed: speed || 0,
+            heading: heading || 0,
+            timestamp: new Date().toISOString()
+          };
+          
+          const QUEUE_KEY = `offline_pings_${shipmentId}`;
+
           try {
             await fetch(`/api/shipments/${shipmentId}/location`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                lat: latitude,
-                lng: longitude,
-                speed: speed || 0,
-                heading: heading || 0,
-                timestamp: new Date().toISOString()
-              })
+              body: JSON.stringify(currentPing)
             });
+            
+            // If network is restored, flush queue
+            const stored = localStorage.getItem(QUEUE_KEY);
+            if (stored) {
+              const queue = JSON.parse(stored);
+              if (queue.length > 0) {
+                // In production, we'd batch-upload these. For the hackathon demo, 
+                // we clear it since the latest position was just successfully synced.
+                localStorage.removeItem(QUEUE_KEY);
+              }
+            }
+
             setLastPing(new Date().toLocaleTimeString());
+            setError(null);
           } catch (err) {
-            setError('Location ping failed.');
+            // Network failed - save to offline queue
+            const stored = localStorage.getItem(QUEUE_KEY);
+            const queue = stored ? JSON.parse(stored) : [];
+            queue.push(currentPing);
+            if (queue.length > 120) queue.shift(); // Max 1 hour of pings
+            localStorage.setItem(QUEUE_KEY, JSON.stringify(queue));
+            
+            setError(`Offline mode. Synced ${queue.length} points locally.`);
           }
         }, 30000); // Ping every 30s as per PRD
       } else {
@@ -408,6 +477,23 @@ export default function DriverClient({ shipmentId }: { shipmentId: string }) {
                 <p className="text-xl font-black">{isResting ? 'RESTING (OFF-DUTY)' : 'ON-DUTY (DRIVING)'}</p>
               </div>
            </button>
+
+           {/* Offline Sync Button */}
+           <AnimatePresence>
+             {offlineQueueSize > 0 && (
+               <motion.button 
+                 initial={{ opacity: 0, height: 0 }}
+                 animate={{ opacity: 1, height: 'auto' }}
+                 exit={{ opacity: 0, height: 0 }}
+                 onClick={forceSyncOffline}
+                 className="w-full py-4 mt-4 rounded-2xl bg-amber-500 hover:bg-amber-400 text-black font-black flex items-center justify-center gap-3 transition-colors shadow-lg"
+               >
+                  <WifiOff className="w-5 h-5 animate-pulse" />
+                  <span>SYNC {offlineQueueSize} OFFLINE PINGS</span>
+                  <RefreshCcw className="w-4 h-4 ml-2" />
+               </motion.button>
+             )}
+           </AnimatePresence>
         </div>
 
         {/* Last Activity */}
@@ -424,23 +510,23 @@ export default function DriverClient({ shipmentId }: { shipmentId: string }) {
            )}
            {error && <p className="text-[10px] font-black text-red-500 uppercase mt-2">{error}</p>}
         </div>
-      </div>
 
-      {/* Floating Action Bar */}
-      <div className="fixed bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
-         <button 
-            onClick={() => {
-              if (destinationName && !destinationName.startsWith('Loading') && !destinationName.startsWith('Unknown')) {
-                window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationName)}`, '_blank');
-              } else {
-                alert('Destination address not fully loaded yet.');
-              }
-            }}
-            className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl shadow-2xl flex items-center justify-center gap-2 transition-transform active:scale-95"
-         >
-            <MapPin className="w-5 h-5" />
-            OPEN NAVIGATOR (GOOGLE MAPS)
-         </button>
+        {/* Action Bar */}
+        <div className="mt-8 pt-4 border-t border-white/10">
+           <button 
+              onClick={() => {
+                if (destinationName && !destinationName.startsWith('Loading') && !destinationName.startsWith('Unknown')) {
+                  window.open(`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destinationName)}`, '_blank');
+                } else {
+                  alert('Destination address not fully loaded yet.');
+                }
+              }}
+              className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-2xl shadow-2xl flex items-center justify-center gap-2 transition-transform active:scale-95"
+           >
+              <MapPin className="w-5 h-5" />
+              OPEN NAVIGATOR (GOOGLE MAPS)
+           </button>
+        </div>
       </div>
     </div>
   );

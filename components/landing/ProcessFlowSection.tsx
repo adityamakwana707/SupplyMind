@@ -118,7 +118,7 @@ export function ProcessFlowSection() {
         ))}
       </div>
       
-      <div className="relative z-10 max-w-[1600px] mx-auto px-4">
+      <div className="relative z-10 container mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

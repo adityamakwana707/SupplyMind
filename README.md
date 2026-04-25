@@ -25,6 +25,7 @@ We didn't just build a dashboard; we deeply integrated the **Google Cloud Ecosys
 - 📍 **Routes & Roads APIs**: Live GPS pings from driver mobile apps are snapped to actual road geometries. ETA calculations dynamically shift based on real-time traffic density, directly influencing "Gig Transport" driver payouts.
 - 🌦️ **Air Quality & Weather APIs**: Environmental context is injected directly into our custom **Risk Engine**. If a fleet is driving into a severe AQI or extreme weather zone, the system dynamically inflates the risk score and proposes alternate routes.
 - 🌐 **Address Validation & Time Zone APIs**: Intelligent warehouse provisioning instantly validates global location geometries and synchronizes operational timezones across the network.
+- 📡 **Offline-First Resilience**: Real-time GPS tracking with an **Offline Sync Queue**. Drivers in low-connectivity zones (rural routes, tunnels) continue tracking locally and sync data to the Control Tower automatically once back online.
 
 ### 2. Generative Mitigation (Vertex AI & Gemini)
 When a high-severity disruption is detected, the AI Control Tower kicks into gear.
@@ -81,7 +82,8 @@ Experience the platform precisely how an enterprise logistics team would.
 Enterprise software shouldn't look like a spreadsheet. SupplyMind employs a state-of-the-art **Glassmorphism Design System**:
 - Deep `backdrop-blur-xl` translucent surfaces and micro-interactions.
 - GPU-accelerated motion graphics via **Framer Motion** for a truly cinematic entry experience.
-- Protected, state-aware authentications preventing race conditions and double-taps.
+- **Adaptive Dark/Light Mode**: Full system theming support with high-contrast optimization for logistics environments.
+- **AI Diagnostic Transparency**: Every AI-generated strategy includes a "View Diagnostic Data" option, exposing the raw neural logic and risk vectors for human compliance auditing.
 
 ---
 
@@ -89,4 +91,3 @@ Enterprise software shouldn't look like a spreadsheet. SupplyMind employs a stat
   <i>Designed and engineered for the Google SkillBuild 2026 Hackathon.</i><br/>
   <b>SupplyMind: Logistics, Solved.</b>
 </div>
-# SupplyMind

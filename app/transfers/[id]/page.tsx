@@ -293,7 +293,7 @@ export default function TransferDetailPage() {
             <label className="block text-sm font-medium text-muted-foreground mb-1">
               Created By
             </label>
-            <p className="text-foreground">{transfer.createdBy?.name || '-'}</p>
+            <p className="text-foreground">{transfer.createdBy?.name || (typeof transfer.createdBy === 'string' ? transfer.createdBy : '-')}</p>
           </div>
 
           <div>
@@ -318,7 +318,7 @@ export default function TransferDetailPage() {
                 <label className="block text-sm font-medium text-gray-400 mb-1">
                   Accepted By
                 </label>
-                <p className="text-foreground">{transfer.validatedBy?.name || '-'}</p>
+                <p className="text-foreground">{transfer.validatedBy?.name || (typeof transfer.validatedBy === 'string' ? transfer.validatedBy : '-')}</p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-1">
@@ -354,13 +354,13 @@ export default function TransferDetailPage() {
                 {transfer.lines?.map((line: any, index: number) => (
                   <tr key={index}>
                     <td className="px-4 py-3 text-foreground">
-                      [{line.productId?.sku}] {line.productId?.name}
+                      {line.productId?.sku ? `[${line.productId.sku}] ` : ''}{line.productId?.name || (typeof line.productId === 'string' ? `[${line.productId}] Unknown Product` : 'Unknown Product')}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      {line.sourceLocationId?.name || '-'}
+                      {line.sourceLocationId?.name || (typeof line.sourceLocationId === 'string' ? line.sourceLocationId : '-')}
                     </td>
                     <td className="px-4 py-3 text-muted-foreground">
-                      {line.targetLocationId?.name || '-'}
+                      {line.targetLocationId?.name || (typeof line.targetLocationId === 'string' ? line.targetLocationId : '-')}
                     </td>
                     <td className="px-4 py-3 text-right text-foreground">
                       {line.quantity} {line.productId?.unit}

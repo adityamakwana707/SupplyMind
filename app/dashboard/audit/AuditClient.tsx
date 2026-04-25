@@ -178,7 +178,10 @@ export default function AuditClient() {
                               <p className="text-xs font-bold text-red-500">{(log.results || []).filter((r: any) => r.riskScore >= 65).length}</p>
                            </div>
                            <div className="flex items-end justify-end">
-                              <button className="text-[10px] font-black text-blue-500 hover:underline flex items-center gap-1">
+                              <button 
+                                 onClick={() => window.alert(`Diagnostic Data Payload:\n\n${JSON.stringify(log, null, 2)}`)}
+                                 className="text-[10px] font-black text-blue-500 hover:underline flex items-center gap-1"
+                              >
                                  VIEW DIAGNOSTIC DATA <ExternalLink className="w-3 h-3" />
                               </button>
                            </div>

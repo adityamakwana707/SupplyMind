@@ -67,6 +67,9 @@ All existing functionality is preserved and extended, not replaced:
 * Warehouse dock scheduling: auto-managed arrival windows
 * Customs event logging: triggers cascade + backup sourcing
 * Audit trail: every risk event, decision, and execution logged
+* **AI Diagnostic Logs**: Raw AI metadata stored per decision for transparency
+* **Offline-Ready Tracking**: Mobile GPS sync with local caching for rural routes
+* **Adaptive Interface**: System-wide Dark/Light mode for 24/7 operations
 
 \---
 
@@ -109,7 +112,7 @@ All existing functionality is preserved and extended, not replaced:
 
 ### 3.1 Frontend
 
-* **Next.js 14** (App Router) — existing pages preserved, new pages added
+* **Next.js 16** (App Router) — existing pages preserved, new pages added
 * **Tailwind CSS** — existing styling preserved
 * **Google Maps JavaScript API** — control tower map, driver navigation, live shipment dots
 * **WebSocket (via Socket.io or Next.js server actions)** — live risk ticker, driver location push
