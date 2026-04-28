@@ -161,9 +161,12 @@ Full Dark/Light mode support via `next-themes` with a sidebar toggle, optimized 
 
 | Role | Email | Password |
 |---|---|---|
-| **Admin / SCM Head** | `admin@supplymind.ai` | `password123` |
-| **Vendor Partner** | `pharma@supplymind.ai` | `password123` |
-| **Transport Driver** | `driver@supplymind.ai` | `password123` |
+| **Admin / SCM Head** | `admin@stockmaster.com` | `password123` |
+| **Vendor Partner** | `vendor@stockmaster.com` | `password123` |
+| **Manager / Warehouse Head** | `manager@stockmaster.com` | `password123` |
+| **Operator** | `operator@stockmaster.com` | `password123` |
+| **Transport Driver** | `transport@stockmaster.com` | `password123` |
+
 
 ### 3-Minute Demo Flow
 1. **Login as Admin** → navigate to **Control Tower**
